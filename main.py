@@ -1,22 +1,11 @@
-from gpiozero import Button
-import RPi.GPIO as GPIO
 from time import sleep
 import pygame
-
-button = Button(17)
-button2 = Button(27)
-
-GPIO.setup(5, GPIO.OUT)
-GPIO.setup(6, GPIO.OUT)
-
+from games.snake.main import SnakeGame
+from controllers.JoystickController import JoystickController
 
 SCREEN_SIZE = (400, 400)
 SPEED = 1
 
-
-# while True:
-
-    # import the pygame module, so you can use it
 
 # define a main function
 def main():
@@ -32,46 +21,31 @@ def main():
     # create a surface on screen that has the size of 240 x 180
     screen = pygame.display.set_mode(SCREEN_SIZE)
 
-    screen.fill((255, 255, 0))
-    pygame.draw.circle(screen, (255, 0, 0), pos, 20)
-    pygame.display.update()
-
     # define a variable to control the main loop
     running = True
 
+    controller = JoystickController()
+
+    lastActions = set()
+
+    morseGame = SnakeGame(SCREEN_SIZE, screen)
+
+    frameCount = 0
 
 
     # main loop
     while running:
-        Up = GPIO.input(5)
-        Down = GPIO.input(6)
-        Right = not button.is_pressed
-        Left = not button2.is_pressed
 
-        if Left:
-            pos = (pos[0] - SPEED, pos[1])
-        if Right:
-            pos = (pos[0] + SPEED, pos[1])
-        if Up:
-            pos = (pos[0], pos[1] - SPEED)
-        if Down:
-            pos = (pos[0], pos[1] + SPEED)
+        frameCount += 1
 
-        if pos[0] < 0:
-            pos = (0, pos[1])
+        actions = controller.getActions()
+        morseGame.setActions(actions)
 
-        if pos[1] < 0:
-            pos = (pos[0], 0)
+        shouldUpdateScreen = morseGame.update(frameCount)
 
-        if pos[0] > SCREEN_SIZE[0]:
-          pos = (SCREEN_SIZE[0], pos[1])
-
-        if pos[1] > SCREEN_SIZE[1]:
-          pos = (pos[0], SCREEN_SIZE[1])
-
-        if Left or Right or Up or Down:
+        if shouldUpdateScreen:
             screen.fill((255, 255, 0))
-            pygame.draw.circle(screen, (255, 0, 0), pos, 20)
+            morseGame.draw(screen)
             pygame.display.update()
 
         # event handling, gets all event from the event queue
