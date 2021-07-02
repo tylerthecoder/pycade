@@ -9,6 +9,12 @@ class Vector:
 		self.x = x
 		self.y = y
 
+	def __str__(self):
+		return f'{self.x},{self.y}'
+
+	def __eq__(self, value):
+		return self.x == value.x and self.y == value.y
+
 	def add(self, val: Vector):
 		self.x += val.x
 		self.y += val.y
@@ -19,9 +25,16 @@ class Vector:
 	def addY(self, val: Vector):
 		self.y += val
 
+	def scalarMultiply(self, val: int):
+		self.x *= val
+		self.y *= val
+
 	def sub(self, val: Vector):
 		self.x -= val.x
 		self.y -= val.y
+
+	def copy(self):
+		return Vector(self.x, self.y)
 
 	def getTuple(self):
 		return (self.x, self.y)

@@ -1,0 +1,3 @@
+
+clean:
+	py3clean .

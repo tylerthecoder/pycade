@@ -1,10 +1,15 @@
 from time import sleep
 import pygame
 from games.snake.main import SnakeGame
+from screens.titleScreen import TitleScreen
+from controllers.KeyboardController import KeyboardController
 from controllers.JoystickController import JoystickController
+from utils.colors import YELLOW
 
 SCREEN_SIZE = (400, 400)
 SPEED = 1
+
+screens = []
 
 
 # define a main function
@@ -13,25 +18,19 @@ def main():
 
     # initialize the pygame module
     pygame.init()
-    # load and set the logo
-    # logo = pygame.image.load("logo32x32.png")
-    # pygame.display.set_icon(logo)
     pygame.display.set_caption("PYCADE")
 
-    # create a surface on screen that has the size of 240 x 180
+    # create a surface on screen
     screen = pygame.display.set_mode(SCREEN_SIZE)
 
     # define a variable to control the main loop
     running = True
 
     controller = JoystickController()
-
-    lastActions = set()
-
     morseGame = SnakeGame(SCREEN_SIZE, screen)
 
     frameCount = 0
-
+    lastActions = set()
 
     # main loop
     while running:
@@ -44,8 +43,8 @@ def main():
         shouldUpdateScreen = morseGame.update(frameCount)
 
         if shouldUpdateScreen:
-            screen.fill((255, 255, 0))
-            morseGame.draw(screen)
+            screen.fill(YELLOW)
+            morseGame.draw()
             pygame.display.update()
 
         # event handling, gets all event from the event queue
