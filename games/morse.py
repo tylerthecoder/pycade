@@ -9,23 +9,24 @@ RED = (255, 0, 0)
 class MorseGame(PycadeGame):
 	pos: Vector = Vector(0, 0)
 
-	def get_name(self):
+	@staticmethod
+	def get_name():
 		return "Morse Mayhem"
 
-	def update(self, actions):
-		if Action.DOWN in actions:
+	def update(self, frameCount):
+		if Action.DOWN in self.newActions:
 			self.pos.addY(speed)
-		if Action.UP in actions:
+		if Action.UP in self.newActions:
 			self.pos.add(Vector(0, -speed))
-		if Action.LEFT in actions:
+		if Action.LEFT in self.newActions:
 			self.pos.add(Vector(-speed, 0))
-		if Action.RIGHT in actions:
+		if Action.RIGHT in self.newActions:
 			self.pos.add(Vector(speed, 0))
 
 		return True
 
-	def draw(self, screen):
-		pygame.draw.circle(screen, RED, self.pos.getTuple(), 20);
+	def draw(self):
+		pass
 
 
 

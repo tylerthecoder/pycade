@@ -4,15 +4,17 @@ from utils.vector import Vector
 from utils.actions import Action
 from typing import Set
 from utils.font import PYCADE_FONT
+from collections.abc import Callable
 
 class PycadeGame(ABC):
-
-	def __init__(self, windowSize, surface):
+	def __init__(self, windowSize, surface, navigate):
+		self.navigate = navigate
 		self.surface = surface
 		self.windowSize = windowSize
 		self.lastActions = set()
 		self.newActions = set()
 
+	@staticmethod
 	@abstractmethod
 	def get_name(self):
 		pass
@@ -28,6 +30,8 @@ class PycadeGame(ABC):
 	def setActions(self, actions: Set[Action]):
 		self.newActions = self.lastActions - actions
 		self.lastActions = actions
+		if Action.MENU in actions:
+			self.navigate()
 
 	def drawRect(self, color, pos: Vector, size: Vector, thickness: int):
 		pygame.draw.rect(

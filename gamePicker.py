@@ -1,19 +1,16 @@
-from games.morse.index import MorseGame
-from games.snake.main import SnakeGame
+from screens.titleScreen import TitleScreen
 from games.games import PycadeGame
 from typing import List
 
 class GamePicker:
+    def __init__(self, screenSize, screen):
+        super().__init__()
+        self.screenSize = screenSize
+        self.screen = screen
 
-	def __init__(self):
-	 super().__init__()
+        self.currentGame = TitleScreen(screenSize, screen, lambda game: self.startGame(game))
 
-	 self.games: List[PycadeGame] = [
-		 MorseGame,
-		 SnakeGame,
-	 ]
-	 self.currentGame = MorseGame;
-
-	def pickGame(self, game: PycadeGame):
-		self.currentGame = game
-
+    def startGame(self, game: PycadeGame):
+        def navigate(game: PycadeGame = TitleScreen):
+            self.startGame(game)
+        self.currentGame = game(self.screenSize, self.screen, navigate)

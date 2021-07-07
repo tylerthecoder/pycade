@@ -17,27 +17,6 @@ List of methods you can add to take advantage of the `pycade`
   - The update function handles all of your game logic (moving characters, applying damage, etc... )
 - draw
 
-- onAction
-  - Whenever the user moves the joy stick or presses a button this is called and you can set whatever variables you need to
-    update your game.
+- lastActions
 
-Here is a very simple game that uses all these functions. I have take out the implementation details of the functions to focus on the core of the logic.
-
-```python
-	class FlappyBird:
-		__init__(self, info):
-			self.screenSize = info;
-
-		update():
-			updateBird();
-			updatePipes();
-
-		draw():
-			drawBackground();
-			drawPipes();
-			drawBird();
-
-		onAction(action)
-			if (action is Actions.ACTION_BUTTON):
-				bird.jump()
-```
+- newActions

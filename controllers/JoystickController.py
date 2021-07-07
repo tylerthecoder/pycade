@@ -5,10 +5,8 @@ from utils.actions import Action
 class JoystickController:
 
 	def __init__(self):
-		pygame.joystick.init();
 		self.joystick = pygame.joystick.Joystick(0)
 		self.joystick.init()
-
 
 	def getActions(self):
 		LR = self.joystick.get_axis(0)

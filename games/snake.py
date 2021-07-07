@@ -9,8 +9,8 @@ import math
 
 class SnakeGame(PycadeGame):
 
-	def __init__(self, screenSize, surface):
-		PycadeGame.__init__(self, screenSize, surface)
+	def __init__(self, screenSize, surface, navigate):
+		PycadeGame.__init__(self, screenSize, surface, navigate)
 		self.moveDir = Vector(1, 0)
 		self.boardSize = 10
 		self.snakeSize = 4
@@ -21,18 +21,19 @@ class SnakeGame(PycadeGame):
 		self.bodyPos = [headPos]
 		self.placeFruit()
 
-	def get_name(self):
+	@staticmethod
+	def get_name():
 		return "Snake"
 
 	def update(self, frameCount):
 		if Action.DOWN in self.newActions and not self.moveDir == Vector(0, 1):
-			self.moveDir = Vector(0, -1)
-		elif Action.UP in self.newActions and not self.moveDir == Vector(0, -1):
 			self.moveDir = Vector(0, 1)
+		elif Action.UP in self.newActions and not self.moveDir == Vector(0, -1):
+			self.moveDir = Vector(0, -1)
 		elif Action.RIGHT in self.newActions and not self.moveDir == Vector(1, 0):
-			self.moveDir = Vector(-1, 0)
-		elif Action.LEFT in self.newActions and not self.moveDir == Vector(-1, 0):
 			self.moveDir = Vector(1, 0)
+		elif Action.LEFT in self.newActions and not self.moveDir == Vector(-1, 0):
+			self.moveDir = Vector(-1, 0)
 
 		if frameCount % math.floor(1 / self.speed) == 0:
 			self.moveHead()
@@ -73,7 +74,6 @@ class SnakeGame(PycadeGame):
 		return True
 
 	def moveHead(self):
-		print("Moving Head", self.bodyPos[0])
 		currentHeadPos = self.bodyPos[0].copy()
 		currentHeadPos.add(self.moveDir)
 
