@@ -27,12 +27,15 @@ class PycadeGame(ABC):
 	def draw(self):
 		pass
 
+	# Makes a pygame surface and returns it
 	def loadImage(self, url: str, size: Vector):
 		img = pygame.image.load(url).convert_alpha()
 		img = pygame.transform.scale(img, size.getTuple())
 		return img
 
 
+	# Draws an image to the screen
+	# You shouldn't set angle or size all the time because pygame is slow and resizing images
 	def drawImage(self, img, position: Vector, angle = 0, size: Vector = None, crop= None):
 		if not size is None:
 			img = pygame.transform.scale(img, size)
@@ -60,6 +63,8 @@ class PycadeGame(ABC):
 		self.msSinceLastFrame = msSinceLastFrame
 		self.totalMs = totalMs
 
+	# Draw a rectangle to the screen
+	# set thickness to 0 to fill the retangle with color
 	def drawRect(self, color, pos: Vector, size: Vector, thickness: int):
 		pygame.draw.rect(
 			self.surface,
@@ -77,15 +82,6 @@ class PycadeGame(ABC):
 		)
 
 	def drawText(self, text: str, pos: Vector):
-		# text_surface, rect = PYCADE_FONT.render("Hello World!", (0, 0, 0))
-
-		# rect = PYCADE_FONT.get_rect(
-
-		# )
-
-
-    # screen.blit(text_surface, (40, 250))
-
 		PYCADE_FONT.render_to(
 			self.surface,
 			pos.getTuple(),

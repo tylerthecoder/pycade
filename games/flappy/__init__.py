@@ -85,6 +85,10 @@ class FlappyGame(PycadeGame):
 		if closestPipe.checkCollision(self.birdPos):
 			self.gameOver()
 
+		# Check if the bird is off the screen
+		if self.birdPos.y > self.screenSize.y:
+			self.gameOver()
+
 		return True
 
 	def draw(self):

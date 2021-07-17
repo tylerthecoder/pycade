@@ -44,7 +44,7 @@ class SnakeGame(PycadeGame):
 
 		if self.frameCount % math.floor(1 / self.speed) == 0:
 			self.moveHead()
-			self.lastMoveDir = self.moveDir
+			self.lastMoveDir = self.moveDir.copy()
 
 		return True
 
@@ -87,6 +87,10 @@ class SnakeGame(PycadeGame):
 		# Append new position
 		self.bodyPos.insert(0,currentHeadPos)
 
+		# Delete the tail if we are too long
+		if len(self.bodyPos) > self.snakeSize:
+			del self.bodyPos[-1]
+
 		# see if the new head is on the fruit
 		if currentHeadPos == self.fruitPos:
 			self.placeFruit()
@@ -95,10 +99,10 @@ class SnakeGame(PycadeGame):
 			if self.speed > maxSpeed:
 				self.speed = maxSpeed
 
-
 		# see if the new head is off the screen
 		if currentHeadPos.x > self.boardSize-1 or currentHeadPos.x < 0 or currentHeadPos.y > self.boardSize - 1 or currentHeadPos.y < 0:
 			self.lose()
+
 
 		# see if the snake intersects itself
 		for index, bodyPos in enumerate(self.bodyPos):
@@ -109,9 +113,6 @@ class SnakeGame(PycadeGame):
 				self.lose()
 
 
-		# Delete the tail if we are too long
-		if len(self.bodyPos) > self.snakeSize:
-			del self.bodyPos[-1]
 
 	def placeFruit(self):
 		potSpots = []
