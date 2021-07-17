@@ -7,17 +7,24 @@ from utils.colors import RED, GREEN,ORANGE
 import random
 import math
 
+
+
+speedDelta = .01
+maxSpeed = 3
+
+
 class SnakeGame(PycadeGame):
 
 	def __init__(self, screenSize, surface, navigate):
 		PycadeGame.__init__(self, screenSize, surface, navigate)
 		self.moveDir = Vector(1, 0)
+		self.lastMoveDir = self.moveDir
 		self.boardSize = 10
 		self.snakeSize = 4
-		self.speed = .001
+		self.speed = .1
 		self.isOver = False
 		self.cellSize = screenSize[0] / self.boardSize
-		headPos = Vector(4,4)
+		headPos = Vector(4, 4)
 		self.bodyPos = [headPos]
 		self.placeFruit()
 
@@ -25,18 +32,19 @@ class SnakeGame(PycadeGame):
 	def get_name():
 		return "Snake"
 
-	def update(self, frameCount):
-		if Action.DOWN in self.newActions and not self.moveDir == Vector(0, 1):
+	def update(self):
+		if Action.DOWN in self.newActions and not self.lastMoveDir == Vector(0, 1):
 			self.moveDir = Vector(0, 1)
-		elif Action.UP in self.newActions and not self.moveDir == Vector(0, -1):
+		elif Action.UP in self.newActions and not self.lastMoveDir == Vector(0, -1):
 			self.moveDir = Vector(0, -1)
-		elif Action.RIGHT in self.newActions and not self.moveDir == Vector(1, 0):
+		elif Action.RIGHT in self.newActions and not self.lastMoveDir == Vector(1, 0):
 			self.moveDir = Vector(1, 0)
-		elif Action.LEFT in self.newActions and not self.moveDir == Vector(-1, 0):
+		elif Action.LEFT in self.newActions and not self.lastMoveDir == Vector(-1, 0):
 			self.moveDir = Vector(-1, 0)
 
-		if frameCount % math.floor(1 / self.speed) == 0:
+		if self.frameCount % math.floor(1 / self.speed) == 0:
 			self.moveHead()
+			self.lastMoveDir = self.moveDir
 
 		return True
 
@@ -74,8 +82,7 @@ class SnakeGame(PycadeGame):
 		return True
 
 	def moveHead(self):
-		currentHeadPos = self.bodyPos[0].copy()
-		currentHeadPos.add(self.moveDir)
+		currentHeadPos = self.bodyPos[0].add(self.moveDir)
 
 		# Append new position
 		self.bodyPos.insert(0,currentHeadPos)
@@ -84,9 +91,9 @@ class SnakeGame(PycadeGame):
 		if currentHeadPos == self.fruitPos:
 			self.placeFruit()
 			self.snakeSize += 1
-			self.speed += .0004
-			if self.speed > .005:
-				self.speed = .005
+			self.speed += speedDelta
+			if self.speed > maxSpeed:
+				self.speed = maxSpeed
 
 
 		# see if the new head is off the screen
@@ -120,9 +127,10 @@ class SnakeGame(PycadeGame):
 		self.fruitPos = random.choice(potSpots)
 
 	def toScreenPos(self, pos: Vector):
-		newPos = pos.copy()
-		newPos.scalarMultiply(self.cellSize)
-		newPos.add(Vector(self.cellSize / 2, self.cellSize / 2))
+		newPos = pos \
+			.scalarMultiply(self.cellSize) \
+			.add(Vector(self.cellSize / 2, self.cellSize / 2))
+
 		return newPos
 
 	def lose(self):

@@ -16,7 +16,7 @@ class TitleScreen(PycadeGame):
 	def get_name():
 		return "Title Screen"
 
-	def update(self, frameCount):
+	def update(self):
 
 		if Action.DOWN in self.newActions:
 			self.selectedGame += 1
@@ -45,7 +45,7 @@ class TitleScreen(PycadeGame):
 				self.drawRect(
 					RED,
 					Vector(0, 30 * gameIndex + 115),
-					Vector(self.windowSize[0], 30),
+					Vector(self.screenSize.x, 30),
 					2
 				)
 

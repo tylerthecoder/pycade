@@ -7,10 +7,10 @@ from utils.font import PYCADE_FONT
 from collections.abc import Callable
 
 class PycadeGame(ABC):
-	def __init__(self, windowSize, surface, navigate):
+	def __init__(self, screenSize, surface, navigate):
 		self.navigate = navigate
 		self.surface = surface
-		self.windowSize = windowSize
+		self.screenSize = Vector(screenSize[0], screenSize[1])
 		self.lastActions = set()
 		self.newActions = set()
 
@@ -20,18 +20,45 @@ class PycadeGame(ABC):
 		pass
 
 	@abstractmethod
-	def update(self, frameCount):
+	def update(self):
 		pass
 
 	@abstractmethod
 	def draw(self):
 		pass
 
+	def loadImage(self, url: str, size: Vector):
+		img = pygame.image.load(url).convert_alpha()
+		img = pygame.transform.scale(img, size.getTuple())
+		return img
+
+
+	def drawImage(self, img, position: Vector, angle = 0, size: Vector = None, crop= None):
+		if not size is None:
+			img = pygame.transform.scale(img, size)
+
+		if angle != 0:
+			img = pygame.transform.rotate(img, angle)
+			position = img.get_rect(topleft = img.get_rect(topleft = position.getTuple()).topleft)
+			self.surface.blit(img, position)
+			return
+
+		if crop is None:
+			self.surface.blit(img, position.getTuple())
+		else:
+			self.surface.blit(img, position.getTuple(), crop)
+
+
 	def setActions(self, actions: Set[Action]):
 		self.newActions = self.lastActions - actions
 		self.lastActions = actions
 		if Action.MENU in actions:
 			self.navigate()
+
+	def setTimes(self, frameCount, msSinceLastFrame, totalMs):
+		self.frameCount = frameCount
+		self.msSinceLastFrame = msSinceLastFrame
+		self.totalMs = totalMs
 
 	def drawRect(self, color, pos: Vector, size: Vector, thickness: int):
 		pygame.draw.rect(
