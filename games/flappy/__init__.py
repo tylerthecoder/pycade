@@ -30,14 +30,11 @@ SKY_COLOR = (32, 155, 155)
 GRASS_COLOR = (0,255, 0)
 
 class FlappyGame(PycadeGame):
-
 	@staticmethod
 	def get_name():
 		return "Flappy Game"
 
-	def __init__(self, screenSize, surface, navigate):
-		PycadeGame.__init__(self, screenSize, surface, navigate)
-
+	def start(self):
 		self.makeImages()
 
 		self.isOver = False
@@ -66,7 +63,6 @@ class FlappyGame(PycadeGame):
 
 		self.birdPos = self.birdPos.add(self.birdVel)
 		self.birdVel = self.birdVel.addY(gravity)
-
 
 		self.birdVel.y = limitValue(self.birdVel.y, -maxFallingSpeed, maxFallingSpeed)
 

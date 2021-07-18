@@ -14,6 +14,14 @@ class PycadeGame(ABC):
 		self.lastActions = set()
 		self.newActions = set()
 
+		self.start()
+
+
+	# This method is called when the the game is started
+	@abstractmethod
+	def start(self):
+		pass
+
 	@staticmethod
 	@abstractmethod
 	def get_name(self):

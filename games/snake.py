@@ -7,24 +7,21 @@ from utils.colors import RED, GREEN,ORANGE
 import random
 import math
 
-
-
+# Constants
 speedDelta = .01
 maxSpeed = 3
 
-
 class SnakeGame(PycadeGame):
-
-	def __init__(self, screenSize, surface, navigate):
-		PycadeGame.__init__(self, screenSize, surface, navigate)
+	def start(self):
 		self.moveDir = Vector(1, 0)
 		self.lastMoveDir = self.moveDir
 		self.boardSize = 10
 		self.snakeSize = 4
 		self.speed = .1
 		self.isOver = False
-		self.cellSize = screenSize[0] / self.boardSize
+		self.cellSize = self.screenSize.x / self.boardSize
 		headPos = Vector(4, 4)
+		# The head is the first body part
 		self.bodyPos = [headPos]
 		self.placeFruit()
 
@@ -45,12 +42,12 @@ class SnakeGame(PycadeGame):
 		if self.frameCount % math.floor(1 / self.speed) == 0:
 			self.moveHead()
 			self.lastMoveDir = self.moveDir.copy()
+			return True
 
-		return True
-
+		# Nothing position was changed so we don't need to redraw
+		return False
 
 	def draw(self):
-
 		if self.isOver:
 			self.drawText("YOU SUCK", Vector(10, 10))
 			self.drawText(f'Score Was {self.snakeSize}', Vector(10, 50))
@@ -72,6 +69,7 @@ class SnakeGame(PycadeGame):
 		# Draw the body
 		for index, bodyPartPos in enumerate(self.bodyPos):
 			newBodyPartPos = self.toScreenPos(bodyPartPos)
+			# The color of the head should be Red.
 			color = RED if index == 0 else GREEN
 			self.drawCircle(color, newBodyPartPos, self.cellSize * .4)
 
@@ -103,7 +101,6 @@ class SnakeGame(PycadeGame):
 		if currentHeadPos.x > self.boardSize-1 or currentHeadPos.x < 0 or currentHeadPos.y > self.boardSize - 1 or currentHeadPos.y < 0:
 			self.lose()
 
-
 		# see if the snake intersects itself
 		for index, bodyPos in enumerate(self.bodyPos):
 			# Head always intersects your self
@@ -112,9 +109,8 @@ class SnakeGame(PycadeGame):
 			if currentHeadPos == bodyPos:
 				self.lose()
 
-
-
 	def placeFruit(self):
+		# Create an array of all the spots where the fruit could be placed
 		potSpots = []
 		for rowIndex in range(self.boardSize):
 			for colIndex in range(self.boardSize):
@@ -122,6 +118,7 @@ class SnakeGame(PycadeGame):
 				if not loc in self.bodyPos:
 					potSpots.append(loc)
 
+		# There are no more spots, so we lose
 		if len(potSpots) == 0:
 			self.win()
 

@@ -7,9 +7,7 @@ from utils.colors import RED
 
 
 class TitleScreen(PycadeGame):
-
-	def __init__(self, windowSize, surface, navigate):
-	 super().__init__(windowSize, surface, navigate)
+	def start(self):
 	 self.selectedGame = 0
 
 	@staticmethod
@@ -17,7 +15,6 @@ class TitleScreen(PycadeGame):
 		return "Title Screen"
 
 	def update(self):
-
 		if Action.DOWN in self.newActions:
 			self.selectedGame += 1
 

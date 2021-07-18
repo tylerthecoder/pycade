@@ -25,14 +25,12 @@ def main():
 
     # define a variable to control the main loop
     running = True
-
     controller = getMainController()
     gameHolder = GamePicker(SCREEN_SIZE, screen)
-
     frameCount = 0
     lastActions = set()
-
     lastDrawTime = 0
+    shouldUpdateScreen = False
 
     # main loop
     while running:
