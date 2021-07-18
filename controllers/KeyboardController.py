@@ -1,8 +1,13 @@
 import pygame
 from pynput.keyboard import Key, Listener
 from utils.actions import Action
+from controllers.BaseController import BaseController
 
-class KeyboardController:
+class KeyboardController(BaseController):
+
+	def __init__(self):
+		self.currentKeys = set()
+
 	def getActionFromKey(self, key: int) -> Action:
 		if key == pygame.K_w or key == pygame.K_UP:
 			return Action.UP
@@ -12,21 +17,32 @@ class KeyboardController:
 			return Action.LEFT
 		if key == pygame.K_s or key == pygame.K_DOWN:
 			return Action.DOWN
-		if key == pygame.K_SPACE or key == pygame.K_RETURN:
+		if key == pygame.K_SPACE:
 			return Action.BUTTON_1
+
+		# Wasd for player two (ijkl)
+		if key == pygame.K_j:
+			return Action.LEFT_P2
+		if key == pygame.K_k:
+			return Action.DOWN_P2
+		if key == pygame.K_l:
+			return Action.RIGHT_P2
+		if key == pygame.K_i:
+			return Action.UP_P2
+		if key == pygame.K_RETURN:
+			return Action.BUTTON_1_P2
+
 		if key == pygame.K_ESCAPE:
 			return Action.MENU
 
-
 	def getActions(self):
-		actions = set()
-
 		for event in pygame.event.get():
 			if event.type == pygame.KEYDOWN:
-				action = self.getActionFromKey(event.key)
-				actions.add(action)
+				self.currentKeys.add(event.key)
+			if event.type == pygame.KEYUP:
+				self.currentKeys.remove(event.key)
 
-		return actions
+		return set(map(self.getActionFromKey, self.currentKeys))
 
 
 

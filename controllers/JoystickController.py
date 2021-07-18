@@ -1,8 +1,8 @@
 import pygame
 from utils.actions import Action
+from controllers.BaseController import BaseController
 
-
-class JoystickController:
+class JoystickController(BaseController):
 
 	def __init__(self):
 		self.joystick = pygame.joystick.Joystick(0)

@@ -18,7 +18,6 @@ pipeCapHeight = 60
 pipeCapWidth = 110
 
 pipeMoveSpeed = 10
-
 pipeDistanceApart = 600
 
 birdSize = Vector(100, 100)
@@ -32,7 +31,7 @@ GRASS_COLOR = (0,255, 0)
 class FlappyGame(PycadeGame):
 	@staticmethod
 	def get_name():
-		return "Flappy Game"
+		return "Flappy Bird"
 
 	def start(self):
 		self.makeImages()

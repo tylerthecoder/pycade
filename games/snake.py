@@ -53,7 +53,7 @@ class SnakeGame(PycadeGame):
 			self.drawText(f'Score Was {self.snakeSize}', Vector(10, 50))
 			return
 
-		#Draw the grid
+		# Draw the grid
 		for rowIndex in range(self.boardSize):
 			for colIndex in range(self.boardSize):
 				x = colIndex * self.cellSize
@@ -124,6 +124,7 @@ class SnakeGame(PycadeGame):
 
 		self.fruitPos = random.choice(potSpots)
 
+	# Converts a position on the grid to a position on the screen
 	def toScreenPos(self, pos: Vector):
 		newPos = pos \
 			.scalarMultiply(self.cellSize) \

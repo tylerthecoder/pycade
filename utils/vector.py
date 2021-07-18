@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Union, Tuple
 
 
 class Vector():
@@ -44,13 +45,11 @@ class Vector():
 	def getTuple(self):
 		return (self.x, self.y)
 
-
-
-def VectorLikeToVector(v: VectorLike):
+def VectorLikeToVector(v: Union[Vector, Tuple]):
 	if isinstance(v, Vector):
 		return v
 	elif isinstance(v, tuple):
-		return Vector(*v)
+		return Vector(v)
 	else:
 		raise Exception(f'Unsupported type: {type(v)}')
 

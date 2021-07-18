@@ -7,15 +7,13 @@ from utils.font import PYCADE_FONT
 from collections.abc import Callable
 
 class PycadeGame(ABC):
-	def __init__(self, screenSize, surface, navigate):
+	def __init__(self, screenSize, surface: pygame.Surface, navigate):
 		self.navigate = navigate
 		self.surface = surface
 		self.screenSize = Vector(screenSize[0], screenSize[1])
-		self.lastActions = set()
+		self.currentActions = set()
 		self.newActions = set()
-
 		self.start()
-
 
 	# This method is called when the the game is started
 	@abstractmethod
@@ -36,15 +34,14 @@ class PycadeGame(ABC):
 		pass
 
 	# Makes a pygame surface and returns it
-	def loadImage(self, url: str, size: Vector):
+	def loadImage(self, url: str, size: Vector) -> pygame.Surface:
 		img = pygame.image.load(url).convert_alpha()
 		img = pygame.transform.scale(img, size.getTuple())
 		return img
 
-
 	# Draws an image to the screen
 	# You shouldn't set angle or size all the time because pygame is slow and resizing images
-	def drawImage(self, img, position: Vector, angle = 0, size: Vector = None, crop= None):
+	def drawImage(self, img: pygame.Surface, position: Vector, angle = 0, size: Vector = None, crop= None):
 		if not size is None:
 			img = pygame.transform.scale(img, size)
 
@@ -59,10 +56,9 @@ class PycadeGame(ABC):
 		else:
 			self.surface.blit(img, position.getTuple(), crop)
 
-
 	def setActions(self, actions: Set[Action]):
-		self.newActions = self.lastActions - actions
-		self.lastActions = actions
+		self.newActions = self.currentActions - actions
+		self.currentActions = actions
 		if Action.MENU in actions:
 			self.navigate()
 

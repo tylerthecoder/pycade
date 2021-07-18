@@ -9,4 +9,4 @@ ALL_GAMES = [
 ]
 
 # Set this to the game you are working on to skip the title screen
-DEFAULT_GAME = None
+DEFAULT_GAME = StreetFighter
