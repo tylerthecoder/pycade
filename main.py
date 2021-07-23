@@ -5,7 +5,7 @@ from utils.colors import YELLOW
 from gamePicker import GamePicker
 
 
-SCREEN_SIZE = (600, 600)
+SCREEN_SIZE = (400, 400)
 SPEED = 1
 
 screens = []
@@ -32,11 +32,14 @@ def main():
     lastDrawTime = 0
     shouldUpdateScreen = False
 
+    print("Using Controller", controller)
+
     # main loop
     while running:
 
         # Pause for next frame
-        deltaTime = clock.tick(30)
+        # deltaTime = clock.tick(30)
+        deltaTime = 0
         totalTimeLapsed = pygame.time.get_ticks()
         frameCount += 1
         gameHolder.currentGame.setTimes(frameCount, deltaTime, totalTimeLapsed)

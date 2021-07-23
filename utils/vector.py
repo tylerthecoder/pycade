@@ -1,5 +1,6 @@
 from __future__ import annotations
 from typing import Union, Tuple
+import math
 
 
 class Vector():
@@ -28,6 +29,9 @@ class Vector():
 	def addY(self, val: int):
 		y = self.y + val
 		return Vector(self.x, y)
+
+	def distance(self, val: Vector):
+		return math.sqrt((self.x - val.x) ** 2 + (self.y - val.y) ** 2)
 
 	def scalarMultiply(self, val: int):
 		x = self.x * val

@@ -34,7 +34,8 @@ class PycadeGame(ABC):
 		pass
 
 	# Makes a pygame surface and returns it
-	def loadImage(self, url: str, size: Vector) -> pygame.Surface:
+	@staticmethod
+	def loadImage(url: str, size: Vector) -> pygame.Surface:
 		img = pygame.image.load(url).convert_alpha()
 		img = pygame.transform.scale(img, size.getTuple())
 		return img
@@ -57,7 +58,7 @@ class PycadeGame(ABC):
 			self.surface.blit(img, position.getTuple(), crop)
 
 	def setActions(self, actions: Set[Action]):
-		self.newActions = self.currentActions - actions
+		self.newActions = actions - self.currentActions
 		self.currentActions = actions
 		if Action.MENU in actions:
 			self.navigate()

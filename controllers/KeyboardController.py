@@ -1,5 +1,4 @@
 import pygame
-from pynput.keyboard import Key, Listener
 from utils.actions import Action
 from controllers.BaseController import BaseController
 

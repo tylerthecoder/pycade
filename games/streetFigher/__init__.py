@@ -2,30 +2,14 @@ import pygame
 from games.games import PycadeGame
 from utils.vector import Vector
 from utils.actions import Action
-from .fighter import Fighter
+from .fighters.sarge import Sarge
+from .fighters.kodo import Kodo
 
-streetFighterSize = Vector(200, 300)
 
 class StreetFighter(PycadeGame):
 	def start(self):
-		fight1Img1 = self.loadImage(
-				"games/streetFigher/assets/Fighter1.png", streetFighterSize
-		)
-		fight1Img2 = self.loadImage(
-			"games/streetFigher/assets/Fighter1a.png", streetFighterSize
-		)
-		self.fighter1 = Fighter([fight1Img1, fight1Img2])
-
-		fight2Img1 = self.loadImage(
-			"games/streetFigher/assets/sarge.png", streetFighterSize
-		)
-		fight2Img2 = self.loadImage(
-			"games/streetFigher/assets/sarge2.png", streetFighterSize
-		)
-		fight2Img1 = pygame.transform.flip(fight2Img1, True, False)
-		fight2Img2 = pygame.transform.flip(fight2Img2, True, False)
-		self.fighter2 = Fighter([fight2Img1, fight2Img2])
-
+		self.fighter1 = Sarge(True, self.screenSize)
+		self.fighter2 = Kodo(False, self.screenSize)
 		self.background = pygame.Surface(self.screenSize.getTuple())
 		self.background.fill((40, 40, 20))
 
@@ -48,12 +32,36 @@ class StreetFighter(PycadeGame):
 		else:
 			self.fighter2.stopWalking()
 
+		if Action.UP in self.newActions:
+			self.fighter1.jump()
+		if Action.UP_P2 in self.newActions:
+			self.fighter2.jump()
+
+		if Action.DOWN in self.currentActions:
+			self.fighter1.block()
+		else:
+			self.fighter1.unblock()
+
+		if Action.DOWN_P2 in self.currentActions:
+			self.fighter2.block()
+		else:
+			self.fighter2.unblock()
+
+
+		if Action.BUTTON_1 in self.newActions:
+			self.fighter1.punch()
+		if Action.BUTTON_1_P2 in self.newActions:
+			self.fighter2.punch()
+
+
+		# Do damage
+		self.fighter1.tryPunching(self.fighter2)
+		self.fighter2.tryPunching(self.fighter1)
 
 		self.fighter1.update(self.frameCount)
 		self.fighter2.update(self.frameCount)
 
 		return True
-
 
 	def draw(self):
 		self.drawImage(self.background, Vector(0, 0))
