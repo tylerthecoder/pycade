@@ -6,6 +6,7 @@ class Action(Enum):
 	LEFT = 2
 	RIGHT = 3
 	BUTTON_1 = 4
+	BUTTON_2 = 11
 	MENU = 5
 
 	# Player 2's actions

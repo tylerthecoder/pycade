@@ -38,7 +38,7 @@ def main():
     while running:
 
         # Pause for next frame
-        # deltaTime = clock.tick(30)
+        deltaTime = clock.tick(30)
         deltaTime = 0
         totalTimeLapsed = pygame.time.get_ticks()
         frameCount += 1

@@ -1,2 +1,1 @@
-gpiozero==45.2.0
 pygame==2.0.1
