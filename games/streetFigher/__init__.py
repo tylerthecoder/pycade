@@ -12,6 +12,7 @@ class StreetFighter(PycadeGame):
 		self.fighter2 = Kodo(False, self.screenSize)
 		self.background = pygame.Surface(self.screenSize.getTuple())
 		self.background.fill((40, 40, 20))
+		self.winner = None
 
 	@staticmethod
 	def get_name():
@@ -61,9 +62,21 @@ class StreetFighter(PycadeGame):
 		self.fighter1.update(self.frameCount)
 		self.fighter2.update(self.frameCount)
 
+
+		if self.fighter1.isDead():
+			self.winner = self.fighter2
+		elif self.fighter2.isDead():
+			self.winner = self.fighter1
+
 		return True
 
 	def draw(self):
+		if self.winner is not None:
+			winText = self.winner.name + " Won!"
+			self.drawText(winText, Vector(self.screenSize.x / 2, self.screenSize.y / 2))
+			return
+
+
 		self.drawImage(self.background, Vector(0, 0))
 		self.fighter1.draw(self)
 		self.fighter2.draw(self)

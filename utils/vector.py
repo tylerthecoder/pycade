@@ -43,6 +43,11 @@ class Vector():
 		y = self.y - val.y
 		return Vector(x, y)
 
+	def constrain(self, lowerValue: Vector, upperValue: Vector):
+		x = upperValue.x if self.x > upperValue.x else lowerValue.x if self.x < lowerValue.x else self.x
+		y = upperValue.y if self.y > upperValue.y else lowerValue.y if self.y < lowerValue.y else self.y
+		return Vector(x, y)
+
 	def copy(self):
 		return Vector(self.x, self.y)
 

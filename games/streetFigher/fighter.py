@@ -1,4 +1,5 @@
-from __future__ import annotations # So we can use the Fighter class as a type
+from __future__ import annotations
+from games.streetFigher.particles import Particals # So we can use the Fighter class as a type
 import pygame
 from utils.vector import Vector
 from games.games import PycadeGame
@@ -31,6 +32,7 @@ class Fighter():
 		self.isPunching = False
 		self.hitPlayer = False
 		self.isBlocking = False
+		self.part = Particals()
 
 	def update(self, frameCount):
 		self.vel.y += gravity
@@ -82,6 +84,8 @@ class Fighter():
 	def unblock(self):
 		self.isBlocking = False
 
+	def isDead(self):
+		return self.health <= 0
 
 	def takeDamage(self, amount: int):
 		self.health -= amount
@@ -126,6 +130,16 @@ class Fighter():
 			imgToDraw,
 			self.pos
 		)
+
+		# If we hit someone, then draw a small partical animation
+		if self.hitPlayer:
+			self.part.draw(
+				game,
+				self.pos.add(Vector(150, 150))
+			)
+
+
+
 		pass
 
 

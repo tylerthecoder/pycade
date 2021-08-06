@@ -3,16 +3,13 @@ import pygame
 from controllers.main import getMainController
 from utils.colors import YELLOW
 from gamePicker import GamePicker
+from config import FULLSCREEN, SCREEN_SIZE
 
-
-SCREEN_SIZE = (400, 400)
-SPEED = 1
-
-screens = []
 
 
 # define a main function
 def main():
+    global SCREEN_SIZE
     # initialize the pygame module
     pygame.init()
     pygame.joystick.init()
@@ -20,10 +17,13 @@ def main():
 
     clock = pygame.time.Clock()
 
-    # create a surface on screen
+    if FULLSCREEN:
+        infoObject = pygame.display.Info()
+        SCREEN_SIZE = (infoObject.current_w, infoObject.current_h)
+
+    # screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
     screen = pygame.display.set_mode(SCREEN_SIZE)
 
-    # define a variable to control the main loop
     running = True
     controller = getMainController()
     gameHolder = GamePicker(SCREEN_SIZE, screen)
@@ -62,11 +62,11 @@ def main():
 
 
         # event handling, gets all event from the event queue
-        # for event in pygame.event.get():
-        #     # only do something if the event is of type QUIT
-        #     if event.type == pygame.QUIT:
-        #         # change the value to False, to exit the main loop
-        #         running = False
+        for event in pygame.event.get((pygame.QUIT)):
+            # only do something if the event is of type QUIT
+            if event.type == pygame.QUIT:
+                # change the value to False, to exit the main loop
+                running = False
 
 
 # run the main function only if this module is executed as the main script

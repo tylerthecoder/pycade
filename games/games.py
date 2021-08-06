@@ -4,7 +4,6 @@ from utils.vector import Vector
 from utils.actions import Action
 from typing import Set
 from utils.font import PYCADE_FONT
-from collections.abc import Callable
 
 class PycadeGame(ABC):
 	def __init__(self, screenSize, surface: pygame.Surface, navigate):
