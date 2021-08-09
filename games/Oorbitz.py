@@ -10,8 +10,6 @@ import numpy
 import time
 
 # Constants
-cometDelta = .01
-maxComet = 1
 planetSize = 40
 cometSize = 15
 rocketSize = 10
@@ -26,7 +24,7 @@ class Oorbitz(PycadeGame):
   def start(self):
     #variables local to Oorbitz
     self.isOver = False
-    self.lives = 3000
+    self.lives = 3
     cometGroup = []
 
     #variables accessible to other classes
