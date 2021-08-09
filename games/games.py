@@ -91,7 +91,7 @@ class PycadeGame(ABC):
 			self.surface,
 			pos.getTuple(),
 			text,
-			(0, 0, 0)
+			(255, 255, 255)
 		)
 
 
