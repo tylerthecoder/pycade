@@ -3,6 +3,7 @@ from games.games import PycadeGame
 from utils.vector import Vector
 from utils.actions import Action
 from utils.number import limitValue
+from utils.canvas import Canvas
 import pygame
 import math
 import random
@@ -53,12 +54,14 @@ class FlappyGame(PycadeGame):
 		self.pipeBottom = pygame.transform.flip(self.pipeTop, False, True)
 
 		# Make the backround image using pygame specific methods
-		self.background = pygame.Surface(self.screenSize.getTuple())
+		self.background = Canvas(size=self.screenSize)
 		self.background.fill(SKY_COLOR)
 
 	def update(self):
 		if self.isOver:
 			return
+
+		# print(self.screenSize)
 
 		self.birdPos = self.birdPos.add(self.birdVel)
 		self.birdVel = self.birdVel.addY(gravity)
@@ -87,7 +90,7 @@ class FlappyGame(PycadeGame):
 		return True
 
 	def draw(self):
-		self.drawImage(self.background, Vector(0, 0))
+		self.canvas.drawCanvas(self.background, Vector(0, 0))
 
 		if self.isOver:
 			self.drawText("YOU SUCK", Vector(10, 10))
@@ -104,7 +107,7 @@ class FlappyGame(PycadeGame):
 
 	def makePipe(self):
 		x = self.pipes[-1].holeX + pipeDistanceApart
-		y = random.randint(0, self.screenSize.y)
+		y = random.randint(0, int(self.screenSize.y))
 		width = random.randint(200, 400)
 		self.pipes.append(Pipe(x, y, width, self))
 
@@ -138,7 +141,7 @@ class Pipe():
 		self.game.drawImage(self.game.pipeBottom, topCapPos)
 		self.game.drawImage(self.game.pipeTop, bottomCapPos)
 
-	def drawPipeShaft(self, x: int, startY: int, endY: int):
+	def drawPipeShaft(self, x: float, startY: float, endY: float):
 		height = endY - startY
 		numOfSections = math.ceil(height / pipeShaftHeight)
 		for index in range(numOfSections):

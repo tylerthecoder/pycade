@@ -2,10 +2,9 @@ from __future__ import annotations
 from typing import Union, Tuple
 import math
 
-
 class Vector():
-	x = 0
-	y = 0
+	x: float = 0
+	y: float = 0
 
 	def __init__(self, x, y):
 		self.x = x
@@ -22,18 +21,18 @@ class Vector():
 		y = self.y + val.y
 		return Vector(x, y)
 
-	def addX(self, val: int):
+	def addX(self, val: float):
 		x = self.x + val
 		return Vector(x, self.y)
 
-	def addY(self, val: int):
+	def addY(self, val: float):
 		y = self.y + val
 		return Vector(self.x, y)
 
 	def distance(self, val: Vector):
 		return math.sqrt((self.x - val.x) ** 2 + (self.y - val.y) ** 2)
 
-	def scalarMultiply(self, val: int):
+	def scalarMultiply(self, val: float):
 		x = self.x * val
 		y = self.y * val
 		return Vector(x, y)
@@ -58,7 +57,7 @@ def VectorLikeToVector(v: Union[Vector, Tuple]):
 	if isinstance(v, Vector):
 		return v
 	elif isinstance(v, tuple):
-		return Vector(v)
+		return Vector(v[0], v[1])
 	else:
 		raise Exception(f'Unsupported type: {type(v)}')
 

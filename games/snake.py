@@ -136,5 +136,9 @@ class SnakeGame(PycadeGame):
 	def lose(self):
 		self.isOver = True
 
+	def win(self):
+		print("You won")
+		self.isOver = True
+
 
 

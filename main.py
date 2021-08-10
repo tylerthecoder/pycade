@@ -17,16 +17,9 @@ def main():
 
     clock = pygame.time.Clock()
 
-    if FULLSCREEN:
-        infoObject = pygame.display.Info()
-        SCREEN_SIZE = (infoObject.current_w, infoObject.current_h)
-
-    # screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
-    screen = pygame.display.set_mode(SCREEN_SIZE)
-
     running = True
     controller = getMainController()
-    gameHolder = GamePicker(SCREEN_SIZE, screen)
+    gameHolder = GamePicker(SCREEN_SIZE)
     frameCount = 0
     lastActions = set()
     lastDrawTime = 0
@@ -53,8 +46,7 @@ def main():
         if timeSinceLastDraw > 1000 / 60 and shouldUpdateScreen:
             lastDrawTime = pygame.time.get_ticks()
             shouldUpdateScreen = False
-            screen.fill(YELLOW)
-            gameHolder.currentGame.draw()
+            gameHolder.draw()
             pygame.display.update()
 
         actions = controller.getActions()

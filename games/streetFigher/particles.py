@@ -1,7 +1,6 @@
 from games.games import PycadeGame
 from utils.canvas import Canvas
 from utils.vector import Vector
-import pygame
 
 class Particals:
 
@@ -9,8 +8,8 @@ class Particals:
 
 	def __init__(self):
 		self.particles = []
-		self.frame1 = Canvas(size=(30, 30))
-		self.frame2 = Canvas(size=(30, 30))
+		self.frame1 = Canvas(size=Vector(30, 30))
+		self.frame2 = Canvas(size=Vector(30, 30))
 		self.make()
 
 	def make(self):
@@ -26,11 +25,11 @@ class Particals:
 			Vector(15, 15),
 			10
 		)
+		pass
 
 	def draw(self, game: PycadeGame, pos: Vector):
 		self.frameIndex += 1
 		img = self.frame1 if self.frameIndex % 2 == 0 else self.frame2
-		print(self.frameIndex)
 		game.drawImage(
 			img._surface,
 			pos
