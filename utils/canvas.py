@@ -10,7 +10,7 @@ ColorType = Tuple[int, int, int] or Tuple[int, int, int, int]
 class Canvas:
 	def __init__(self, surface = None, size: Vector = None) -> None:
 		if surface is None and size is not None:
-			self._surface = pygame.Surface(size.getTuple())
+			self._surface = pygame.Surface(size.getTuple(), pygame.SRCALPHA)
 		else:
 			self._surface = surface
 
@@ -18,6 +18,7 @@ class Canvas:
 		self._surface.fill(color)
 
 	def fillTransparent(self) -> None:
+		self._surface.convert_alpha()
 		self._surface.fill((0,0,0,0))
 
 	def drawCircle(self, color: ColorType, pos: Vector, radius: int) -> None:
@@ -40,7 +41,7 @@ class Canvas:
 		PYCADE_FONT.render_to(
 			self._surface,
 			# Convert floats to ints
-			tuple(map(int,  pos.getTuple())),
+			tuple(map(int, pos.getTuple())),
 			text,
 			color
 		)

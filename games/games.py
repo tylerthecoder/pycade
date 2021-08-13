@@ -52,12 +52,6 @@ class PycadeGame(ABC):
 		if not size is None:
 			img = pygame.transform.scale(img, size)
 
-		if angle != 0:
-			img = pygame.transform.rotate(img, angle)
-			position = img.get_rect(topleft = img.get_rect(topleft = position.getTuple()).topleft)
-			self.surface.blit(img, position)
-			return
-
 		if crop is None:
 			self.surface.blit(img, position.getTuple())
 		else:
@@ -95,7 +89,7 @@ class PycadeGame(ABC):
 	def drawText(self, text: str, pos: Vector):
 		PYCADE_FONT.render_to(
 			self.surface,
-			pos.getTuple(),
+			tuple(map(int, pos.getTuple())),
 			text,
 			(0, 0, 0)
 		)

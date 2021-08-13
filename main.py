@@ -1,11 +1,7 @@
-from time import sleep
 import pygame
 from controllers.main import getMainController
-from utils.colors import YELLOW
 from gamePicker import GamePicker
-from config import FULLSCREEN, SCREEN_SIZE
-
-
+from config import SCREEN_SIZE
 
 # define a main function
 def main():
@@ -21,7 +17,6 @@ def main():
     controller = getMainController()
     gameHolder = GamePicker(SCREEN_SIZE)
     frameCount = 0
-    lastActions = set()
     lastDrawTime = 0
     shouldUpdateScreen = False
 
@@ -53,16 +48,10 @@ def main():
         gameHolder.currentGame.setActions(actions)
 
 
-        # event handling, gets all event from the event queue
         for event in pygame.event.get((pygame.QUIT)):
-            # only do something if the event is of type QUIT
             if event.type == pygame.QUIT:
-                # change the value to False, to exit the main loop
                 running = False
 
 
-# run the main function only if this module is executed as the main script
-# (if you import this as a module then nothing is executed)
 if __name__=="__main__":
-    # call the main function
     main()

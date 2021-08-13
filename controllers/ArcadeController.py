@@ -1,6 +1,8 @@
+from typing import Optional
 import pygame
 from utils.actions import Action
 from controllers.BaseController import BaseController
+
 
 
 # This file has the keymapping for my specific arcade controller.
@@ -10,7 +12,7 @@ class ArcadeControllers(BaseController):
 	def __init__(self):
 		self.currentKeys = set()
 
-	def getActionFromKey(self, key: int) -> Action:
+	def getActionFromKey(self, key: int) -> Optional[Action]:
 		if key == pygame.K_UP:
 			return Action.UP
 		if key== pygame.K_RIGHT:

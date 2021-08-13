@@ -38,7 +38,6 @@ class FlappyGame(PycadeGame):
 		self.makeImages()
 
 		self.isOver = False
-		self.angle = 0
 		self.birdPos = Vector(60, 10)
 		self.birdVel = Vector(0, 0)
 		self.score = 0
@@ -60,8 +59,6 @@ class FlappyGame(PycadeGame):
 	def update(self):
 		if self.isOver:
 			return
-
-		# print(self.screenSize)
 
 		self.birdPos = self.birdPos.add(self.birdVel)
 		self.birdVel = self.birdVel.addY(gravity)
@@ -97,7 +94,7 @@ class FlappyGame(PycadeGame):
 			self.drawText(f'Score Was {self.score}', Vector(10, 50))
 			return
 
-		self.drawImage(self.flappyImg, self.birdPos, angle=self.angle)
+		self.drawImage(self.flappyImg, self.birdPos)
 
 		for pipe in self.pipes:
 			pipe.draw()

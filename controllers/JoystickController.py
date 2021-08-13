@@ -28,8 +28,6 @@ class JoystickController(BaseController):
 		P2B1 = self.joystick2.get_button(0)
 		P2B2 = self.joystick2.get_button(1)
 
-		print(P1B1, P1B2, P2B1, P2B2, self.joystick.get_numbuttons())
-
 		actions = set()
 		if LR1 >= .9:
 			actions.add(Action.LEFT)

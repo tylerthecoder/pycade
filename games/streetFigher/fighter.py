@@ -75,7 +75,8 @@ class Fighter():
 		if self.isBlocking or self.isPunching:
 			return
 		self.isPunching = True
-		self.punchTimeLeft = 8
+		self.punchTimeLeft = 10
+		self.part = Particals()
 		pass
 
 	def block(self):

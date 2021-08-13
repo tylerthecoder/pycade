@@ -1,13 +1,14 @@
 import pygame
 from utils.actions import Action
 from controllers.BaseController import BaseController
+from  typing import Optional
 
 class KeyboardController(BaseController):
 
 	def __init__(self):
 		self.currentKeys = set()
 
-	def getActionFromKey(self, key: int) -> Action:
+	def getActionFromKey(self, key: int) -> Optional[Action]:
 		if key == pygame.K_w or key == pygame.K_UP:
 			return Action.UP
 		if key == pygame.K_d or key== pygame.K_RIGHT:
