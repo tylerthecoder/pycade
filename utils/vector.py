@@ -33,7 +33,7 @@ class Vector():
 	def distance(self, val: Vector):
 		return math.sqrt((self.x - val.x) ** 2 + (self.y - val.y) ** 2)
 
-	def scalarMultiply(self, val: int):
+	def scalarMultiply(self, val: float):
 		x = self.x * val
 		y = self.y * val
 		return Vector(x, y)
