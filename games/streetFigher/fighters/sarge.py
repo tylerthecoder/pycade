@@ -20,6 +20,9 @@ class Sarge(Fighter):
 		)
 		punchImg = pygame.transform.flip(punchImg, True, False)
 		super().__init__("Sarge", img1, img2, punchImg, img1, isPlayer1, screenSize)
+		self.armHeight = (0.5 * self.size.y) + 20
+
+
 
 
 

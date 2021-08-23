@@ -22,6 +22,7 @@ class Fighter():
 		self.isPlayer1 = isPlayer1
 		self.screenSize = screenSize
 		self.size = Vector(200, 300)
+		self.armHeight = self.size.y / 2
 
 		startingPos = Vector(100, 100) if isPlayer1 else Vector(screenSize.x - self.size.x, 100)
 		self.pos = startingPos
@@ -132,11 +133,12 @@ class Fighter():
 			self.pos
 		)
 
+	def drawOverlay(self, game: PycadeGame):
 		# If we hit someone, then draw a small partical animation
 		if self.hitPlayer:
 			self.part.draw(
 				game,
-				self.pos.add(Vector(150, 150))
+				self.pos.add(Vector(self.size.x, self.size.y - self.armHeight))
 			)
 
 

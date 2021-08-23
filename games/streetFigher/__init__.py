@@ -80,5 +80,7 @@ class StreetFighter(PycadeGame):
 		self.drawImage(self.background, Vector(0, 0))
 		self.fighter1.draw(self)
 		self.fighter2.draw(self)
+		self.fighter1.drawOverlay(self)
+		self.fighter2.drawOverlay(self)
 
 
