@@ -19,7 +19,7 @@ class SnakeGame(PycadeGame):
 		self.snakeSize = 4
 		self.speed = .1
 		self.isOver = False
-		self.cellSize = self.screenSize.x / self.boardSize
+		self.cellSize = min(self.screenSize.x, self.screenSize.y) / self.boardSize
 		headPos = Vector(4, 4)
 		# The head is the first body part
 		self.bodyPos = [headPos]
@@ -80,6 +80,7 @@ class SnakeGame(PycadeGame):
 		return True
 
 	def moveHead(self):
+		# Move the head
 		currentHeadPos = self.bodyPos[0].add(self.moveDir)
 
 		# Append new position
@@ -133,6 +134,9 @@ class SnakeGame(PycadeGame):
 		return newPos
 
 	def lose(self):
+		self.isOver = True
+
+	def win(self):
 		self.isOver = True
 
 

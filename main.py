@@ -1,18 +1,11 @@
-from time import sleep
 import pygame
 from controllers.main import getMainController
-from utils.colors import YELLOW
 from gamePicker import GamePicker
-
-
-SCREEN_SIZE = (400, 400)
-SPEED = 1
-
-screens = []
-
+from config import SCREEN_SIZE
 
 # define a main function
 def main():
+    global SCREEN_SIZE
     # initialize the pygame module
     pygame.init()
     pygame.joystick.init()
@@ -20,15 +13,10 @@ def main():
 
     clock = pygame.time.Clock()
 
-    # create a surface on screen
-    screen = pygame.display.set_mode(SCREEN_SIZE)
-
-    # define a variable to control the main loop
     running = True
     controller = getMainController()
-    gameHolder = GamePicker(SCREEN_SIZE, screen)
+    gameHolder = GamePicker(SCREEN_SIZE)
     frameCount = 0
-    lastActions = set()
     lastDrawTime = 0
     shouldUpdateScreen = False
 
@@ -53,24 +41,17 @@ def main():
         if timeSinceLastDraw > 1000 / 60 and shouldUpdateScreen:
             lastDrawTime = pygame.time.get_ticks()
             shouldUpdateScreen = False
-            screen.fill(YELLOW)
-            gameHolder.currentGame.draw()
+            gameHolder.draw()
             pygame.display.update()
 
         actions = controller.getActions()
         gameHolder.currentGame.setActions(actions)
 
 
-        # event handling, gets all event from the event queue
-        # for event in pygame.event.get():
-        #     # only do something if the event is of type QUIT
-        #     if event.type == pygame.QUIT:
-        #         # change the value to False, to exit the main loop
-        #         running = False
+        for event in pygame.event.get((pygame.QUIT)):
+            if event.type == pygame.QUIT:
+                running = False
 
 
-# run the main function only if this module is executed as the main script
-# (if you import this as a module then nothing is executed)
 if __name__=="__main__":
-    # call the main function
     main()

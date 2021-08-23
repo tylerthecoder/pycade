@@ -15,3 +15,4 @@ class Action(Enum):
 	RIGHT_P2 = 8
 	LEFT_P2 = 9
 	BUTTON_1_P2 = 10
+	BUTTON_2_P2 = 12

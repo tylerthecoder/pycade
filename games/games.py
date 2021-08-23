@@ -2,18 +2,20 @@ from abc import ABC, abstractmethod, abstractproperty
 import pygame
 from utils.vector import Vector
 from utils.actions import Action
-from typing import Set
+from utils.canvas import Canvas
+from typing import Set, Tuple
 from utils.font import PYCADE_FONT
-from collections.abc import Callable
 
 class PycadeGame(ABC):
-	def __init__(self, screenSize, surface: pygame.Surface, navigate):
+	def __init__(self, screenSize: Tuple[int, int], surface: pygame.Surface, navigate):
 		self.navigate = navigate
 		self.surface = surface
 		self.screenSize = Vector(screenSize[0], screenSize[1])
 		self.currentActions = set()
 		self.newActions = set()
+		self.canvas = Canvas(surface=surface)
 		self.start()
+
 
 	# This method is called when the the game is started
 	@abstractmethod
@@ -22,7 +24,7 @@ class PycadeGame(ABC):
 
 	@staticmethod
 	@abstractmethod
-	def get_name(self):
+	def get_name():
 		pass
 
 	@abstractmethod
@@ -40,17 +42,15 @@ class PycadeGame(ABC):
 		img = pygame.transform.scale(img, size.getTuple())
 		return img
 
+
+	def updateSurface(self, surface: pygame.Surface):
+		self.surface = surface
+
 	# Draws an image to the screen
 	# You shouldn't set angle or size all the time because pygame is slow and resizing images
 	def drawImage(self, img: pygame.Surface, position: Vector, angle = 0, size: Vector = None, crop= None):
 		if not size is None:
 			img = pygame.transform.scale(img, size)
-
-		if angle != 0:
-			img = pygame.transform.rotate(img, angle)
-			position = img.get_rect(topleft = img.get_rect(topleft = position.getTuple()).topleft)
-			self.surface.blit(img, position)
-			return
 
 		if crop is None:
 			self.surface.blit(img, position.getTuple())
@@ -78,7 +78,7 @@ class PycadeGame(ABC):
 			thickness
 		)
 
-	def drawCircle(self, color, pos: Vector, radius: int):
+	def drawCircle(self, color, pos: Vector, radius: float):
 		pygame.draw.circle(
 			self.surface,
 			color,
@@ -89,7 +89,7 @@ class PycadeGame(ABC):
 	def drawText(self, text: str, pos: Vector):
 		PYCADE_FONT.render_to(
 			self.surface,
-			pos.getTuple(),
+			tuple(map(int, pos.getTuple())),
 			text,
 			(255, 255, 255)
 		)

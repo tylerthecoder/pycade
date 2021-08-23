@@ -1,10 +1,11 @@
-
-
 installLib:
-	pip install --user -r requirements.txt
+	pip3 install -r requirements.txt
 
 run:
-	python main.py
+	python3 main.py
+
+srun:
+	sudo python3 main.py
 
 clean:
 	py3clean .

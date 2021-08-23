@@ -1,40 +1,45 @@
+from typing import Optional
 import pygame
 from utils.actions import Action
 from controllers.BaseController import BaseController
-from  typing import Optional
 
-class KeyboardController(BaseController):
+
+
+# This file has the keymapping for my specific arcade controller.
+
+class ArcadeControllers(BaseController):
 
 	def __init__(self):
 		self.currentKeys = set()
 
 	def getActionFromKey(self, key: int) -> Optional[Action]:
-		if key == pygame.K_w or key == pygame.K_UP:
+		if key == pygame.K_UP:
 			return Action.UP
-		if key == pygame.K_d or key== pygame.K_RIGHT:
+		if key== pygame.K_RIGHT:
 			return Action.RIGHT
-		if key == pygame.K_a or key== pygame.K_LEFT:
+		if key== pygame.K_LEFT:
 			return Action.LEFT
-		if key == pygame.K_s or key == pygame.K_DOWN:
+		if key == pygame.K_DOWN:
 			return Action.DOWN
-		if key == pygame.K_SPACE:
+		if key == pygame.K_LCTRL:
 			return Action.BUTTON_1
 		if key == pygame.K_LALT:
 			return Action.BUTTON_2
 
-		# Wasd for player two (ijkl)
-		if key == pygame.K_j:
+		if key == pygame.K_d:
 			return Action.LEFT_P2
-		if key == pygame.K_k:
+		if key == pygame.K_f:
 			return Action.DOWN_P2
-		if key == pygame.K_l:
+		if key == pygame.K_g:
 			return Action.RIGHT_P2
-		if key == pygame.K_i:
+		if key == pygame.K_r:
 			return Action.UP_P2
-		if key == pygame.K_RETURN:
+		if key == pygame.K_a:
 			return Action.BUTTON_1_P2
+		if key == pygame.K_s:
+			return Action.BUTTON_2_P2
 
-		if key == pygame.K_ESCAPE:
+		if key == pygame.K_5:
 			return Action.MENU
 
 	def getActions(self):
@@ -45,10 +50,3 @@ class KeyboardController(BaseController):
 				self.currentKeys.remove(event.key)
 
 		return set(map(self.getActionFromKey, self.currentKeys))
-
-
-
-
-
-
-
