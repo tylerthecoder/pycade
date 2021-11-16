@@ -1,3 +1,5 @@
+from typing import List, Type
+from games.games import PycadeGame
 from games.snake import SnakeGame
 from games.flappy import FlappyGame
 from games.streetFigher import StreetFighter
@@ -5,7 +7,7 @@ from games.Oorbitz import Oorbitz
 
 from games.dieZombie import DieZombie
 
-ALL_GAMES = [
+ALL_GAMES: List[Type[PycadeGame]] = [
 	Oorbitz,
 	SnakeGame,
 	FlappyGame,

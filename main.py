@@ -18,7 +18,8 @@ def main():
     gameHolder = GamePicker(SCREEN_SIZE)
     frameCount = 0
     lastDrawTime = 0
-    shouldUpdateScreen = False
+    # init to true so the screen draws the initial contents
+    shouldUpdateScreen = True
 
     print("Using Controller", controller)
 

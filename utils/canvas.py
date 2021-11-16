@@ -1,4 +1,6 @@
 from __future__ import annotations
+
+from pygame.rect import Rect
 from utils.vector import Vector
 import pygame
 from utils.font import PYCADE_FONT
@@ -37,7 +39,13 @@ class Canvas:
 			endPos.getTuple()
 		)
 
-	def drawText(self, color: ColorType, text: str, pos: Vector):
+	def drawText(self, color: ColorType, text: str, pos: Vector, center: bool = False, size = 25) -> None:
+		if center:
+			fontRect = PYCADE_FONT.get_rect(text, size=size)
+			fontRect.center = (self._surface.get_rect().center[0], int(pos.y))
+			PYCADE_FONT.render_to(self._surface, fontRect, text, color, size=size)
+			return
+
 		PYCADE_FONT.render_to(
 			self._surface,
 			# Convert floats to ints

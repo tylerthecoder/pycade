@@ -7,7 +7,7 @@ from controllers.BaseController import BaseController
 
 # This file has the keymapping for my specific arcade controller.
 
-class ArcadeControllers(BaseController):
+class ArcadeController(BaseController):
 
 	def __init__(self):
 		self.currentKeys = set()

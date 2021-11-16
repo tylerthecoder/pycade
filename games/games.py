@@ -24,7 +24,7 @@ class PycadeGame(ABC):
 
 	@staticmethod
 	@abstractmethod
-	def get_name():
+	def get_name() -> str:
 		pass
 
 	@abstractmethod
