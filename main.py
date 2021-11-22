@@ -6,10 +6,12 @@ from config import SCREEN_SIZE
 # define a main function
 def main():
     global SCREEN_SIZE
+
     # initialize the pygame module
     pygame.init()
     pygame.joystick.init()
     pygame.display.set_caption("PYCADE")
+    pygame.mouse.set_visible(False)
 
     clock = pygame.time.Clock()
 
@@ -43,7 +45,11 @@ def main():
             lastDrawTime = pygame.time.get_ticks()
             shouldUpdateScreen = False
             gameHolder.draw()
-            pygame.display.update()
+            # Temp fix for pi. The screen wont update on pi
+            # Unless you call the update function twice
+            # Still get a weird glitching effect
+            pygame.display.flip()
+            pygame.display.flip()
 
         actions = controller.getActions()
         gameHolder.currentGame.setActions(actions)

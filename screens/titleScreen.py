@@ -53,18 +53,17 @@ class Menu(ABC):
 
 		backgroundImg = TitleScreen.get_background_image(game)
 
-		print("Drawing background")
-
 		game.drawImage(backgroundImg, Vector(0, 0))
 
-		game.canvas.drawText(BLACK, "Pycade", Vector(game.screenSize.x / 2, 30), center=True, size=40)
+		game.canvas.drawText(BLACK, "Pycade" + str(self.selectedItem), Vector(game.screenSize.x / 2, 30), center=True, size=40)
 		game.canvas.drawText(BLACK, self.getTitle(), Vector(game.screenSize.x / 2, 70), center=True, size=24)
 
 		for i, item in enumerate(self.items):
+			y = 160 + (i * 30)
 			if i == self.selectedItem:
-				game.canvas.drawText(RED, item, Vector(0, i * 30 + 160), size = 22, center=True)
+				game.canvas.drawText(RED, item, Vector(0, y), size = 22, center=True)
 			else:
-				game.canvas.drawText(BLACK, item, Vector(0, i * 30 + 160), size = 20, center=True)
+				game.canvas.drawText(BLACK, item, Vector(0, y), size = 20, center=True)
 
 
 	def newMenu(self, menu: Type[Menu]) -> None:
@@ -154,7 +153,7 @@ class CommunityMenu(Menu):
 class RomMenu(Menu):
 	def __init__(self, game: PycadeGame, onExit: Callable[[], None] = None) -> None:
 		self.roms = get_all_roms()
-		romNames = get_all_roms()
+		romNames = list(map(self.getRomName, get_all_roms()))
 		romNames.append("Exit")
 
 		super().__init__(
@@ -162,6 +161,9 @@ class RomMenu(Menu):
 			items = romNames,
 			onExit = onExit,
 		)
+
+	def getRomName(self, rom: str) -> str:
+		return rom.split("/")[-1]
 
 	def getTitle(self) -> str:
 		return "ROMs"
@@ -181,6 +183,7 @@ class TitleScreen(PycadeGame):
 	@staticmethod
 	def get_background_image(game: PycadeGame) -> pygame.Surface:
 		if TitleScreen.backgroundImage is None:
+			print("Loading background image", game.screenSize)
 			TitleScreen.backgroundImage = PycadeGame.loadImage("assets/title-screen-background.jpg", game.screenSize)
 		return TitleScreen.backgroundImage
 
@@ -200,42 +203,8 @@ class TitleScreen(PycadeGame):
 		sys.exit(0)
 
 	def draw(self):
-		print("Drawing")
 		self.menu.draw(self)
 
-		# for gameIndex, game in enumerate(ALL_GAMES):
-		# 	self.canvas.drawText(
-		# 		BLACK,
-		# 		game.get_name(),
-		# 		Vector(10, 30 * gameIndex + 120)
-		# 	)
-
-		# 	if self.selectedGame == gameIndex:
-		# 		self.canvas.drawRect(
-		# 			RED,
-		# 			Vector(0, 30 * gameIndex + 115),
-		# 			Vector(self.screenSize.x, 30),
-		# 			2
-		# 		)
-
-		# for romIndex, rom in enumerate(self.allRoms):
-		# 	romIndex += len(ALL_GAMES)
-
-		# 	romText = "NES: " + rom.split("/")[-1].split(".")[0]
-
-		# 	self.canvas.drawText(
-		# 		BLACK,
-		# 		romText,
-		# 		Vector(10, 30 * romIndex + 120)
-		# 	)
-
-		# 	if self.selectedGame == romIndex:
-		# 		self.canvas.drawRect(
-		# 			RED,
-		# 			Vector(0, 30 * romIndex + 115),
-		# 			Vector(self.screenSize.x, 30),
-		# 			2
-		# 		)
 
 
 

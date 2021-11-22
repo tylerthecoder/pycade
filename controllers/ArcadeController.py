@@ -46,7 +46,7 @@ class ArcadeController(BaseController):
 		for event in pygame.event.get((pygame.KEYDOWN, pygame.KEYUP)):
 			if event.type == pygame.KEYDOWN:
 				self.currentKeys.add(event.key)
-			if event.type == pygame.KEYUP:
+			if event.type == pygame.KEYUP and event.key in self.currentKeys:
 				self.currentKeys.remove(event.key)
 
 		return set(map(self.getActionFromKey, self.currentKeys))
